@@ -6,6 +6,10 @@ export const useVroom = () => {
   const { jobs, vehicles, toasters, setSolution } = useContext(RoutingContext);
 
   const fetchSolution = async () => {
+    if(jobs.length === 0 || vehicles.length === 0){
+      toasters.errorToaster("File specified is missing either jobs or vehicles.");
+      return;
+    }
     setLoading(true);
     if (!IsPayloadValid) {
       setLoading(false);

@@ -2,12 +2,23 @@ import Button from "@mui/material/Button";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useContext } from "react";
 import { RoutingContext } from "../../context/routeContext";
+import jsonValidator from "./jsonValidator";
 function Upload() {
-  const { setJobs, setVehicles } = useContext(RoutingContext);
+  const { setJobs, setVehicles, toasters } = useContext(RoutingContext);
   const handleFileRead = (e: any) => {
+    try {
     const content = JSON.parse(e.target.result);
+    const validateContent = jsonValidator(content)
+    if (!validateContent.valid){
+      toasters.errorToaster(validateContent.message)
+      return
+    }
     setJobs(content.jobs);
     setVehicles(content.vehicles);
+    }
+    catch(err){
+      toasters.errorToaster("Can't parse JSON File")
+    }
   };
 
   const readFile = (e: any) => {
