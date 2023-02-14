@@ -1,0 +1,6 @@
+.clickable :hover{
+  cursor: pointer;
+}
+.MuiPaper-root{
+  opacity: 0.9;
+}
